@@ -34,6 +34,34 @@ function matchPath(pathname, options = {}) {
 
   const paths = [].concat(path);
 
+  /**
+   * reduce详解
+   */
+  // arr.reduce(callback,[initialValue])
+  /**
+   * callback （执行数组中每个值的函数，包含四个参数）
+   *
+   * 1、previousValue （上一次调用回调返回的值，或者是提供的初始值（initialValue））
+   * 2、currentValue （数组中当前被处理的元素）
+   * 3、index （当前元素在数组中的索引）
+   * 4、array （调用 reduce 的数组）
+   *
+   *initialValue （作为第一次调用 callback 的第一个参数。）
+   */
+  // let names = ['Alice', 'Bob', 'Tiff', 'Bruce', 'Alice'];
+  //
+  // let nameNum = names.reduce((pre, cur)=>{
+  //   console.log(cur);
+  //   console.log(pre);
+  //   if(cur in pre){
+  //     pre[cur]++
+  //   }else{
+  //     pre[cur] = 1
+  //   }
+  //   return pre
+  // },{});
+  // console.log(nameNum); //{Alice: 2, Bob: 1, Tiff: 1, Bruce: 1}
+
   return paths.reduce((matched, path) => {
     if (!path && path !== "") return null;
     if (matched) return matched;

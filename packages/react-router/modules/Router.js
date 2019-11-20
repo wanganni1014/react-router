@@ -24,10 +24,13 @@ class Router extends React.Component {
     // on the initial render. If there are, they will replace/push when
     // they mount and since cDM fires in children before parents, we may
     // get a new location before the <Router> is mounted.
+    // 这是一个小技巧。我们必须开始监听location在构造函数中有任何<重定向>s初始渲染。如果有，他们会replace/push的时候
+    // 这些问题越来越多，而且由于cDM在父元素之前就开始影响子元素，我们可能会在被挂载之前获得一个新的location。
     this._isMounted = false;
     this._pendingLocation = null;
 
     if (!props.staticContext) {
+      // 如果不是 staticRouter，则对 location 进行监听
       this.unlisten = props.history.listen(location => {
         if (this._isMounted) {
           this.setState({ location });
@@ -51,6 +54,7 @@ class Router extends React.Component {
   }
 
   render() {
+    // 使用了 React Context 传递 history、location、match、staticContext，使得所有子组件都可以获取这些属性和方法
     return (
       <RouterContext.Provider
         children={this.props.children || null}
@@ -58,7 +62,7 @@ class Router extends React.Component {
           history: this.props.history,
           location: this.state.location,
           match: Router.computeRootMatch(this.state.location.pathname),
-          staticContext: this.props.staticContext
+          staticContext: this.props.staticContext //staticContext 是 staticRouter 中的 API，不是公用 API
         }}
       />
     );
