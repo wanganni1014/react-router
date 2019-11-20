@@ -14,6 +14,16 @@ if (typeof forwardRef === "undefined") {
   forwardRef = forwardRefShim;
 }
 
+/**
+ * Link 组件作用是跳转到指定某个路由。Link 实际是对 <a> 标签进行了封装。
+ *
+ * 点击时会触发以下：
+ *
+ * 改变 url，但使用了 e.preventDefault()，所以页面没有发生跳转。
+ * 根据是否传递属性 replace，有传就是替代当前 state（history.replace），否则是往 state 堆栈中新增（history.push），从而路由发生了改变。
+ * 路由发生了改变，由于 Router 中有对 location 进行监听，从而通过 context 传递给消费子组件，匹配 path 是否相同，渲染相应的组件。
+ *
+ */
 function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }

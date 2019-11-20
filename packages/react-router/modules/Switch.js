@@ -7,6 +7,11 @@ import RouterContext from "./RouterContext.js";
 import matchPath from "./matchPath.js";
 
 /**
+ * Switch 使用了 context.Consumer（消费组件），订阅了 Router 提供的 context，一旦 location 发生改变，context 也会改变，
+ * 判断当前 location.pathname 是否与子组件的 path 是否匹配，如果匹配，则渲染对应的子组件，其他都不渲染。
+ **/
+
+/**
  * The public API for rendering the first <Route> that matches.
  */
 class Switch extends React.Component {

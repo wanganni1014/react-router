@@ -34,12 +34,13 @@ class Route extends React.Component {
         {context => {
           invariant(context, "You should not use <Route> outside a <Router>");
 
+          // 处理用 context 传递的还是自己传递的 location 和 match
           const location = this.props.location || context.location;
           const match = this.props.computedMatch
             ? this.props.computedMatch // <Switch> already computed the match for us
             : this.props.path
             ? matchPath(location.pathname, this.props)
-            : context.match;
+            : context.match; //是否匹配当前路径
 
           const props = { ...context, location, match };
 
@@ -51,7 +52,11 @@ class Route extends React.Component {
             children = null;
           }
 
+          // Route 内定义一个 Provider，给 children 传递 props
           return (
+            // 如果有 children，则渲染 children
+            // 如果组件传递的是 render 及 match 是匹配的，则渲染 render
+            // 如果组件传递 component 及 match 是匹配的，则渲染 component
             <RouterContext.Provider value={props}>
               {props.match
                 ? children
